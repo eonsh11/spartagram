@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>spartagram</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- css 초기화 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
+    <link rel="stylesheet" href="../static/main.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+
+    <!-- google font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
+          rel="stylesheet">
+
+    <script>
+        {#$(document).ready(function () {#}
+            {#get_post()#}
+            {#show_comment()#}
+            {#have_token()#}
+        {# })#}
+
+        function logout() {
+            $.removeCookie('mytoken');
+            alert('로그아웃!')
+            window.location.href = '/login'
+        }
+
+        function current_page() {
+            window.location.reload();
+        }
+
+        function posting() {
+            window.location.href = '/posting'
+        }
+
+
+        function go_mypage() {
+            window.location.href = '/mypage'
+        }
+
+        {#function have_token() {#}
+        {#    $.ajax({#}
+        {#        type: "GET",#}
+        {#        url: "/api/user",#}
+        {#        data: {},#}
+        {#        success: function (response) {#}
+        {#            if (response['result'] == 'success') {#}
+        {#                writer_id = response['id']#}
+        {#                $.cookie('mytoken', response['token']);#}
+        {##}
+        {#            }#}
+        {#        }#}
+        {#    })#}
+        {# }#}
+
+
+
+        {#function get_post() {#}
+        {#    $.ajax({#}
+        {#            type: "GET",#}
+        {#            url: "/home",#}
+        {#            data: {},#}
+        {#            success: function (response) {#}
+        {#                let rows = response['post']#}
+        {#                let coms = response['post-com']#}
+        {#                console.log(coms)#}
+        {#                for (let i = 0; i < rows.length; i++) {#}
+        {#                    let postid = rows[i]['postid']#}
+        {#                    let url = rows[i]['url']#}
+        {#                    let text = rows[i]['mytext']#}
+        {#                    let location = rows[i]['mylocation']#}
+        {#                    let mytime = rows[i]['mytime']#}
+        {##}
+        {#                    let temp_html = `<div class="feed-info">#}
+        {#                            <div class="info-left">#}
+        {#                                <img src="${url}">#}
+        {#                                <div class="info-left-txt">#}
+        {#                                    <h1 class="info-name"><p>${postid}</p></h1>#}
+        {#                                    <h1 id="user-loca" class="info-location">${location}</h1>#}
+        {#                                </div>#}
+        {#                            </div>#}
+        {#                            <div class="info-right">#}
+        {#                                <div></div>#}
+        {#                                <h1 class="info-time">${mytime}</h1>#}
+        {#                            </div>#}
+        {#                        </div>#}
+        {#                        <div class="feed-container">#}
+        {#                            <div class="feed-post">#}
+        {#                                <img src="${url}">#}
+        {#                            </div>#}
+        {#                            <div class="feed-txt">#}
+        {#                                <h3>${text}</h3>#}
+        {#                            </div>#}
+        {#                        </div>#}
+        {#                        <div class="feed-footer">#}
+        {#                            <div class="feed-comments">#}
+        {#                                <h3>로그인 아이디</h3>#}
+        {#                                <input id="comment-box" type="text" placeholder="댓글입력창"/>#}
+        {#                            </div>#}
+        {##}
+        {#                        </div>`#}
+        {#                    $(`#user-info-feed`).append(temp_html)#}
+        {##}
+        {#                }#}
+        {##}
+        {#            }#}
+        {##}
+        {#        }#}
+        {#    )#}
+        {# }#}
+
+        function save_comment() {
+            let comment = $('#comment-box').val()
+            num = {{ post_number }}
+            $.ajax({
+                type: 'POST',
+                url: '/feedhome',
+                data: {comment_give: comment, num_give: num},
+                success: function (response) {
+                    alert(response['msg'])
+                    alert("댓글 작성 완료")
+                    window.location.reload()
+                }
+            })
+        }
+
+        {#function show_comment() {#}
+        {#    $.ajax({#}
+        {#        type: "GET",#}
+        {#        url: "/homecom",#}
+        {#        data: {},#}
+        {#        success: function (response) {#}
+        {#            let rows = response['comments']#}
+        {#            for ( let i = 0; i < rows.length; i++ ) {#}
+        {#                let comment = rows[i]['comments']#}
+        {##}
+        {#                let temp_html = `<div class="card">#}
+        {#                                            <p>${comment}</p>#}
+        {#                                </div>`#}
+        {#                $(`#comment-list`).append(temp_html)#}
+        {#            }#}
+        {#        }#}
+        {#    });#}
+        {# }#}
+
+
+    </script>
+</head>
+<body>
+<div id="header">
+    <div class="logo"></div>
+    <button class="btn_logout" onclick="logout()"></button>
+
+</div>
+<div class="container">
+    <div class="feed">
+        {% for post in posts_info %}
+
+            <div class="posting_wrap">
+                <div class="writer_info">
+                    <div class="writer_info_left">
+                        <img src="{{ post['profile_url'] }}">
+                        <p class="writer_id">{{ post['id'] }}</p>
+
+
+                    </div>
+                    <div class="writer_info_right">
+                        <p class="writer_location" style="text-align: center">{{ post['mylocation'] }}</p>
+                        <p class="write-time" style="text-align: center">{{ post['mytime'] }}</p>
+                    </div>
+                </div>
+                <div class="feed_container">
+                    <img class="feed_post" src="{{ post['url'] }}">
+                    <h3 class="feed_txt">{{ post['mytext'] }}</h3>
+                </div>
+            </div>
+            <div class="comment_container">
+                <div class="comment_wrap">
+
+                    <p>{{ post_id['id'] }}</p>
+                    <div class="comment_btn_group">
+                        <button class="btn_edit_comment" onclick="save_comment()">등록</button>
+                    </div>
+
+                </div>
+                <textarea id="comment-box" placeholder="댓글을 입력해주세요"></textarea>
+
+                <div id="comment-list">
+
+                    {#                {% for comment in comments %}#}
+                    <div class="card">
+                        <p>id가 들어올자리</p>
+                        <p class="card_comment">커멘트 들어올자리</p>
+                        {#                        <p>"{{ comment['comments'] }}"</p>#}
+                        <button class="btn_delete" onclick=""></button>
+                    </div>
+                    {#                {% endfor %}#}
+
+                </div>
+            </div>
+
+            <!--                <input  value="댓글입력창">-->
+
+
+
+        {% endfor %}
+
+
+    </div>
+
+
+</div>
+<div id="footer">
+    <button class="feed_nav" onclick="current_page()"></button>
+    <button class="posting_nav" onclick="posting()"></button>
+    <button class="mypage_nav" onclick="go_mypage()"></button>
+</div>
+</body>
+</html>

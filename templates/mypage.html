@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>spartagram</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- css 초기화 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
+    <link rel="stylesheet" href="../static/main.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+
+    <!-- google font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
+          rel="stylesheet">
+
+    <script>
+        $(document).ready(function () {
+            // have_token();
+            // editing();
+        });
+
+        function current_page() {
+            window.location.reload();
+        }
+
+        function posting() {
+            window.location.href = '/posting'
+        }
+
+
+        function feed() {
+            window.location.href = '/feed_home'
+        }
+
+        function logout() {
+            $.removeCookie('mytoken');
+            alert('로그아웃!')
+            window.location.href = '/login'
+        }
+
+        function profile_edit() {
+            let url = $('#profile-img-edit').val()
+
+            // 겟을 먼저해서 유저네임을 받아온다.
+
+            $.ajax({
+                type: "POST",
+                //로그인 유저아이디에 해당하는 프로필 편집 구현해야함
+                url: "/mypage",
+                data: {img_give: url},
+                success: function (response) {
+                    alert(response['msg'])
+                    window.location.reload()
+                }
+            })
+
+        }
+
+
+    </script>
+    <title>mypage</title>
+</head>
+<body>
+<div id="header">
+    <div class="logo"></div>
+    <button class="btn_logout" onclick="logout()"></button>
+</div>
+<div class="container">
+    <div id="profile-wrapper">
+        <div id="profile-left">
+            <!--                이미지주소가 담긴 박스가 들어오는 부분-->
+            <div id="profile-img">
+                <img src="{{ profile['url'] }}">
+            </div>
+
+
+        </div>
+        <div id="profile-right">
+            <p class="profile_id">{{ id }}</p>
+            <p>{{ profile['email'] }}</p>
+            <div class="edit">
+                <input class="btn_input_edit" id="profile-img-edit" type="text" placeholder="이미지 url">
+                <button class="btn_edit" onclick="profile_edit()" type="button">프로필편집</button>
+
+            </div>
+
+        </div>
+    </div>
+    <div id="count-container">
+        <div id="count-wrapper">
+            <p>___개의 게시물을 작성하였습니다.</p>
+        </div>
+    </div>
+    <div id="post-container">
+        {% for post in posts %}
+            <div class="post-body">
+                <img src="{{ post['url'] }}" alt="게시물이미지">
+            </div>
+        {% endfor %}
+
+    </div>
+
+</div>
+<div id="footer">
+        <button class="feed_nav" onclick="feed()"></button>
+        <button class="posting_nav" onclick="posting()"></button>
+        <button class="mypage_nav" onclick="current_page()"></button>
+    </div>
+</body>
+</html>

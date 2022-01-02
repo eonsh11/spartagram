@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+
+    <!-- Webpage Title -->
+    <title>Hello, world!</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+		<!-- JS -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+
+
+    <script>
+      // 로그아웃은 내가 가지고 있는 토큰만 쿠키에서 없애면 됩니다.
+      function logout(){
+        $.removeCookie('mytoken');
+        alert('로그아웃!')
+        window.location.href='/login'
+      }
+      function posting(){
+        window.location.href='/posting'
+      }
+      function  feed(){
+          window.location.href='/feed_home'
+      }
+
+    </script>
+
+  </head>
+  <body>
+    <p>
+      <h1 class="title">로그인 후 보이는 페이지입니다.</h1>
+      <h1 class="subtitle">로그인 지속 시간은 5분입니다.</h1>
+    </p>
+    <h5 class="subtitle">본인의 ID: {{id}}</h5>
+    <button onclick="logout()">로그아웃하기</button>
+    <button onclick="posting()">포스팅하기</button>
+  <button onclick="feed()">피드로가기</button>
+  </body>
+</html>

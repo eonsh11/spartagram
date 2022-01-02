@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>spartagram</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- css 초기화 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
+    <link rel="stylesheet" href="../static/main.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+
+    <!-- google font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
+          rel="stylesheet">
+
+    <script>
+        $(document).ready(function () {
+            have_token();
+        });
+
+        function logout() {
+            $.removeCookie('mytoken');
+            alert('로그아웃!')
+            window.location.href = '/login'
+        }
+
+        function current_page() {
+            window.location.reload();
+        }
+
+        function feed() {
+            window.location.href = '/feed_home'
+        }
+
+
+        function go_mypage() {
+            window.location.href = '/mypage'
+        }
+
+        function have_token() {
+            $.ajax({
+                type: "GET",
+                url: "/api/user",
+                data: {},
+                success: function (response) {
+                    if (response['result'] == 'success') {
+                        writer_id = response['id']
+                        $.cookie('mytoken', response['token']);
+                        return
+                    } else {
+                        alert('로그인 창으로 가서 토큰 받아오세요')
+                        window.location.href = '/login'
+                    }
+                }
+            })
+        }
+
+        function save_posting() {
+            let url = $('.url-window').val()
+            let mylocation = $('.mylocation-window').val()
+            let mytime = $('.mytime-window').val()
+            let text = $('.mytextbox-window').val()
+
+            $.ajax({
+                type: "POST",
+                url: "/posting",
+                data: {
+                    url_give: url,
+                    mylocation_give: mylocation,
+                    mytime_give: mytime,
+                    mytext_give: text,
+                    writerid_give: writer_id
+                },
+                success: function (response) {
+                    alert(response['msg'])
+                    window.location.href = '/mypage'
+                }
+            })
+        }
+
+    </script>
+
+</head>
+<body>
+<div id="header">
+    <div class="logo"></div>
+    <button class="btn_logout" onclick="logout()"></button>
+</div>
+<div class="container">
+    <div class="post_wrap">
+        <input class="url-window btn_input" type="text" placeholder="이미지 URL"/>
+
+        <input class="mylocation-window btn_input" type="text" placeholder="내 위치"/>
+
+        <input class="mytime-window btn_input" type="text" placeholder="날짜 및 시간"/>
+
+        <textarea class="mytextbox-window btn_input" placeholder="댓글을 입력해주세요"></textarea>
+
+        <button onclick="save_posting()" type="button" class="btn_submit complete-button">작성완료</button>
+    </div>
+
+
+</div>
+<div id="footer">
+    <button class="feed_nav" onclick="feed()"></button>
+    <button class="posting_nav" onclick="current_page()"></button>
+    <button class="mypage_nav" onclick="go_mypage()"></button>
+</div>
+</body>
+</html>

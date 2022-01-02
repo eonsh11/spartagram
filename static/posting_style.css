@@ -1,0 +1,79 @@
+#posting-container{
+    width: 100%;
+    max-width: 480px;
+    height: 800px;
+    margin: auto;
+    background-color: whitesmoke;
+}
+
+/*헤더*/
+#posting-header{
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    border-top: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+}
+#posting-header .back_button{
+    background-color: blue;
+    width: 13%;
+    height: 15%;
+    margin-left: 3%;
+    margin-right: 3%;
+}
+#posting-header .new_post p{
+    font-weight: bold;
+}
+/*메인컨테이너*/
+#posting-main-container{
+    width: 100%;
+    padding-top: 30%;
+}
+/*메인컨테이너 - url*/
+#posting-main-container .url p{
+    margin: 4%;
+    font-weight: bold;
+    font-size: 15px;
+    color: gray;
+}
+#posting-main-container .url-window{
+    margin-left: 4%;
+    width: 75%;
+    border: 1px solid lightgray;
+}
+/*메인컨테이너 - mylocation*/
+#posting-main-container .mylocation p{
+    margin: 4%;
+    font-weight: bold;
+    color: gray;
+}
+#posting-main-container .mylocation-window {
+    margin-left: 4%;
+    width: 85.5%;
+    border: 1px solid lightgray;
+}
+/*메인컨테이너 - mytime*/
+#posting-main-container .mytime p{
+    margin: 4%;
+    font-weight: bold;
+    color: gray;
+}
+#posting-main-container .mytime-window {
+    margin-left: 4%;
+    width: 72.5%;
+    border: 1px solid lightgray;
+}
+
+/*텍스트 컨테이너*/
+#mytext-container .mytext p{
+    margin: 4%;
+    font-weight: bold;
+    color: gray;
+}
+#mytext-container .mytextbox-window {
+    margin-left: 4%;
+    width: 91%;
+    border: 1px solid lightgray;
+}

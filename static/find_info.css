@@ -1,0 +1,9 @@
+* {
+    font-family: 'Noto Serif KR', serif;
+}
+
+body {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 0;
+}
