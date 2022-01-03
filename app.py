@@ -249,6 +249,20 @@ def comment():
         return jsonify({'msg': '성공을 마신다 빠끄'})
 
 
+@app.route("/feed_home/deletecmt", methods=["POST"])
+def cmt_delete():
+    userinfo = check_token()
+    reply = request.form['cmt_receive']
+    # a = list(db.comments.find({}))
+    # a['commenter']
+    delete_check = db.comments.find_one({'commenter': userinfo['id'], 'reply': reply})
+
+    if delete_check is not None:
+        db.comments.delete_one({'commenter': userinfo['id'], 'reply': reply})
+        return jsonify({'msg': '댓글 삭제 완료'})
+    else:
+        return jsonify({'msg': '본인의 댓글이 아닙니다.'})
+
 #####################mypage부분#####################
 
 
@@ -261,6 +275,10 @@ def mypage_post():
         empty = ""
         if url_receive is empty:
             url_receive = "https://search.pstatic.net/sunny/?src=https%3A%2F%2Fi1.sndcdn.com%2Favatars-000643159560-6433ap-t500x500.jpg&type=sc960_832"
+            return jsonify({'msg': 'url을 입력해 주세요.'})
+        elif url_receive is empty:
+            url_receive = "https://search.pstatic.net/sunny/?src=https%3A%2F%2Fi1.sndcdn.com%2Favatars-000643159560-6433ap-t500x500.jpg&type=sc960_832"
+            return jsonify({'msg': 'url을 입력해 주세요.'})
         # 2번 아이디 받아온다.
         # if url_receive is None:
         # return jsonify({'msg': '이미지 사진 url을 입력해주세요.'})

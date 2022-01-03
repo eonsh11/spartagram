@@ -78,6 +78,18 @@
             window.location.reload();
         }
 
+        function deletecmt(commenter){
+            let cmt = commenter
+            $.ajax({
+                type: 'POST',
+                url: '/feed_home/deletecmt',
+                data: {cmt_receive: cmt},
+                success: function (response) {
+                    swal(response['msg']).then(function (){window.location.reload()})
+
+                }
+            })
+        }
 
     </script>
 </head>
@@ -118,8 +130,8 @@
                     <div id="comment-list">
                         <div class="card">
                             <p>{{ comment['commenter'] }}</p>
-                            <p class="card_comment">{{ comment['reply'] }}</p>
-                            <button class="btn_delete" onclick=""></button>
+                            <p class="card_comment" id = "cmt-{{ comment['reply'] }}">{{ comment['reply'] }}</p>
+                            <button class="btn_delete" onclick="deletecmt('{{ comment['reply'] }}')"></button>
                         </div>
                     </div>
 
