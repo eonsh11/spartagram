@@ -62,13 +62,17 @@
 
         }
 
+        function go_feed(){
+            window.location.href = '/feed_home'
+        }
+
 
     </script>
     <title>mypage</title>
 </head>
 <body>
 <div id="header">
-    <div class="logo"></div>
+    <button onclick="go_feed()" class="logo"></button>
     <button class="btn_logout" onclick="logout()"></button>
 </div>
 <div class="container">

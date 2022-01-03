@@ -58,7 +58,7 @@
 
         function save_comment(post_real_id) {
             let reply = $(`#comment-box-${post_real_id}`).val();
-
+            console.log(reply)
             $.ajax({
                 type: 'POST',
                 url: '/feed_com',
@@ -67,18 +67,23 @@
                     swal(response['msg']);
                     swal("댓글 작성 완료").then(function (){window.location.reload()})
 
+
                 }
             })
-            window.location.reload()
 
         }
-{########################################################################################################}
+
+
+        function reload() {
+            window.location.reload();
+        }
+
 
     </script>
 </head>
 <body>
 <div id="header">
-    <div class="logo"></div>
+    <button onclick="reload()" class="logo"></button>
     <button class="btn_logout" onclick="logout()"></button>
 
 </div>

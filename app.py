@@ -42,6 +42,11 @@ def check_token():
 ##  HTML을 주는 부분             ##
 #################################
 @app.route('/')
+def no_way_home():
+    return render_template('home.html')
+
+
+@app.route('/home')
 def home():
     # 현재 이용자의 컴퓨터에 저장된 cookie 에서 mytoken 을 가져옵니다.
     token_receive = request.cookies.get('mytoken')
@@ -82,10 +87,12 @@ def api_register():
     pw_receive = request.form['pw_give']
     name_receive = request.form['name_give']
     email_receive = request.form['email_give']
+    url_receive = request.form['url_give']
 
     pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()
 
-    db.user.insert_one({'id': id_receive, 'pw': pw_hash, 'name': name_receive, 'email': email_receive, 'url': ""})
+    db.user.insert_one(
+        {'id': id_receive, 'pw': pw_hash, 'name': name_receive, 'email': email_receive, 'url': url_receive})
 
     return jsonify({'result': 'success'})
 
@@ -180,13 +187,10 @@ def posting_post():
     profile_url = list(db.user.find({'id': user_receive}, {'_id': False}))[-1]
     postingtime = time.strftime('%x\n%X', time.localtime(time.time()))
 
-    # num이 쓰이는지 check
-
-    count = 1
 
     doc = {
         'id': user_receive,
-        'num': count,
+        # 'num': count,
         'url': url_receive,
         'mylocation': mylocation_receive,
         'mytime': postingtime,
@@ -214,9 +218,8 @@ def feed_post():
     all_post = list(db.posting.find({}, {'_id'}))
     posts_info = list(db.posting.find({}))
     comments = list(db.comments.find({}))
-
-    return render_template('feed_index.html', post_id=post_id, posts_info=posts_info, comments=comments,
-                           all_post=all_post)
+    # user_id = db.user.find_one({'id': userinfo['id']})
+    return render_template('feed_index.html', post_id=post_id, posts_info=posts_info, comments=comments, all_post=all_post)
 
 
 @app.route("/feed_com", methods=["POST"])
@@ -234,12 +237,20 @@ def comment():
 
         db.comments.insert_one(doc)
         comments_info = list(db.comments.find({'post_id': real_id}, {'_id'}))
-        db.posting.update_one({'_id': ObjectId(real_id)}, {'$push': {'comments': comments_info.pop()}})
+
+        if len(comments_info) != 0:
+            db.posting.update_one({'_id': ObjectId(real_id)}, {'$push': {'comments': comments_info.pop()}})
+        else:
+            print("댓글의 개수가 0입니다.")
+
+
+
 
         return jsonify({'msg': '성공을 마신다 빠끄'})
 
 
 #####################mypage부분#####################
+
 
 @app.route("/mypage", methods=["GET", "POST"])
 def mypage_post():
@@ -247,6 +258,9 @@ def mypage_post():
         # 1번 체크토큰 해준다
         userinfo = check_token()
         url_receive = request.form['img_give']
+        empty = ""
+        if url_receive is empty:
+            url_receive = "https://search.pstatic.net/sunny/?src=https%3A%2F%2Fi1.sndcdn.com%2Favatars-000643159560-6433ap-t500x500.jpg&type=sc960_832"
         # 2번 아이디 받아온다.
         # if url_receive is None:
         # return jsonify({'msg': '이미지 사진 url을 입력해주세요.'})
@@ -321,16 +335,6 @@ def find_id():
 
 
 #####################################################
-
-# token확인 함수
-# def check_token():
-#     # 현재 이용자의 컴퓨터에 저장된 cookie 에서 mytoken 을 가져옵니다.
-#     token_receive = request.cookies.get('mytoken')
-#     # token을 decode하여 payload를 가져오고, payload 안에 담긴 유저 id를 통해 DB에서 유저의 정보를 가져옵니다.
-#     payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-#     return db.user.find_one({'id': payload['id']}, {'_id': False})
-
-#################################
 
 
 if __name__ == '__main__':
