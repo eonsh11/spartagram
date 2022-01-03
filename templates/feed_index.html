@@ -33,6 +33,22 @@
             window.location.href = '/login'
         }
 
+        $(function () {
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 1000) {
+                    $('#tothetop').fadeIn();
+                } else {
+                    $('#tothetop').fadeOut();
+                }
+            });
+            $("#tothetop").click(function () {
+                $('html, body').animate({
+                    scrollTop: 0
+                }, 500);
+                return false
+            });
+        });
+
         function current_page() {
             window.location.reload();
         }
@@ -134,6 +150,8 @@
 
 
 </div>
+<div id="tothetop"></div>
+
 <div id="footer">
     <button class="feed_nav" onclick="current_page()"></button>
     <button class="posting_nav" onclick="posting()"></button>

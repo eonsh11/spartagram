@@ -25,6 +25,19 @@ body {
     margin: 0 auto;
     position: relative;
 }
+#tothetop {
+    background-image: url('../static/images/top_ment.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    opacity: 80%;
+    width: 50px;
+    height: 50px;
+    position: fixed;
+    bottom: 70px;
+    right: 10px;
+    cursor: pointer;
+}
 
 #logo {
     margin: 150px auto 10px;
