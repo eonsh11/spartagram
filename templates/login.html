@@ -46,8 +46,7 @@
                         // 이 토큰을 mytoken이라는 키 값으로 쿠키에 저장합니다.
                         $.cookie('mytoken', response['token']);
 
-                        swal('로그인 완료!');
-                        window.location.href = '/feed_home'
+                        swal('로그인 완료!').then(function (){window.location.href = '/feed_home'})
                     } else {
                         // 로그인이 안되면 에러메시지를 띄웁니다.
                         swal(response['msg']);

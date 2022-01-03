@@ -22,8 +22,7 @@
 
     <script>
         $(document).ready(function () {
-            // have_token();
-            // editing();
+
         });
 
         function current_page() {
@@ -41,8 +40,8 @@
 
         function logout() {
             $.removeCookie('mytoken');
-            swal('로그아웃!');
-            window.location.href = '/login'
+            swal('로그아웃!').then(function() {window.location.href = '/login'})
+
         }
 
         function profile_edit() {
@@ -56,8 +55,8 @@
                 url: "/mypage",
                 data: {img_give: url},
                 success: function (response) {
-                    swal(response['msg']);
-                    window.location.reload()
+                    swal(response['msg']).then(function (){window.location.reload()})
+
                 }
             })
 

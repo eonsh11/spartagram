@@ -1,6 +1,8 @@
+from bson import ObjectId
 from flask import Flask, render_template, jsonify, request, session, redirect, url_for
 import certifi
 import time
+
 app = Flask(__name__)
 
 from pymongo import MongoClient, collection
@@ -65,7 +67,6 @@ def login():
 @app.route('/register')
 def register():
     return render_template('register.html')
-
 
 
 #################################
@@ -168,33 +169,19 @@ def posting():
     return render_template('posting.html')
 
 
-@app.route('/user', methods=['POST'])
-def posting_list_post():
-    posting_list = list(db.posting.find({}, {'_id': False}))
-    count = len(posting_list) + 1
-
-    doc = {
-        'num': count
-    }
-    db.posting.insert_one(doc)
-
-
 @app.route('/posting', methods=['POST'])
 def posting_post():
     userinfo = check_token()
-
     user_receive = userinfo['id']
     url_receive = request.form['url_give']
     mylocation_receive = request.form['mylocation_give']
     mytext_receive = request.form['mytext_give']
-
-    #유저정보에 있는 필드의 마지막 항목은 프로필 url임
-    profile_url = list(db.user.find({'id': user_receive},{'_id': False}))[-1]
-
+    # 유저정보에 있는 필드의 마지막 항목은 프로필 url임
+    profile_url = list(db.user.find({'id': user_receive}, {'_id': False}))[-1]
     postingtime = time.strftime('%x\n%X', time.localtime(time.time()))
 
-    posts_info = list(db.posting.find({}))
-    last_number = 0
+    # num이 쓰이는지 check
+
     count = 1
 
     doc = {
@@ -204,54 +191,52 @@ def posting_post():
         'mylocation': mylocation_receive,
         'mytime': postingtime,
         'mytext': mytext_receive,
-        'comments': [{'id':'','comment':''}],
+        'comments': [{
+            'commenter': ''
+        }],
         'profile_url': profile_url['url'],
     }
+
     db.posting.insert_one(doc)
 
-
-    posting_list = list(db.posting.find({}, {'_id': False}))
     return jsonify({'msg': '게시글 작성 완료'})
 
 
 ################################################################
+################################################################
 ## 피더부분################
 
-@app.route("/feed_home", methods=["GET", "POST"])
+
+@app.route("/feed_home", methods=["GET"])
 def feed_post():
+    userinfo = check_token()
+    post_id = db.posting.find_one({'id': userinfo['id']})
+    all_post = list(db.posting.find({}, {'_id'}))
+    posts_info = list(db.posting.find({}))
+    comments = list(db.comments.find({}))
+
+    return render_template('feed_index.html', post_id=post_id, posts_info=posts_info, comments=comments,
+                           all_post=all_post)
+
+
+@app.route("/feed_com", methods=["POST"])
+def comment():
     if request.method == "POST":
-
         userinfo = check_token()
-
+        real_id = request.form['post_id_give']
         comment_receive = request.form['comment_give']
-        user_receive = userinfo['id']
-
-        ##############################################
-
-        comments_list = list(db.comments.find({}, {'_id': False}))
-        count = len(comments_list) + 1
 
         doc = {
-            'id': user_receive,
-            'comments': comment_receive
+            'post_id': ObjectId(real_id),
+            'commenter': userinfo['id'],
+            'reply': comment_receive
         }
 
-        # print(commenter)
-        db.posting['comments'].insert_one(doc)
-        return jsonify({'msg': '저장 완료!'})
+        db.comments.insert_one(doc)
+        comments_info = list(db.comments.find({'post_id': real_id}, {'_id'}))
+        db.posting.update_one({'_id': ObjectId(real_id)}, {'$push': {'comments': comments_info.pop()}})
 
-    else:
-        userinfo = check_token()
-        # comments에서  각 게시물에 쓰여진 모든 댓글을 가져온다.
-
-        post_id = db.posting.find_one({'id':userinfo['id']})
-        posts_info = list(db.posting.find({}))
-        comments_num = list(db.comments.find({}))
-
-        posts_num = list(db.posting.find({}))
-        last_number = dict(posts_info[-1])['num']
-
-        return render_template('feed_index.html', posts_info=posts_info, post_id=post_id, post_number=last_number)
+        return jsonify({'msg': '성공을 마신다 빠끄'})
 
 
 #####################mypage부분#####################
@@ -261,16 +246,13 @@ def mypage_post():
     if request.method == "POST":
         # 1번 체크토큰 해준다
         userinfo = check_token()
-
         url_receive = request.form['img_give']
         # 2번 아이디 받아온다.
+        # if url_receive is None:
+        # return jsonify({'msg': '이미지 사진 url을 입력해주세요.'})
+        # else:
         user_receive = userinfo['id']
-
-        user = list(db.user.find({'id':user_receive}, {'_id': False}))
         db.user.update_one({'id': user_receive}, {'$set': {'url': url_receive}})
-
-
-        post = list(db.posting.find({'id': user_receive}, {'_id': False}))
         db.posting.update_many({'id': user_receive}, {"$set": {"profile_url": url_receive}})
         print("post 업데이트 완료")
         # 3번 db에 넣어준다.
@@ -279,62 +261,76 @@ def mypage_post():
 
     else:
         userinfo = check_token()
-
         profile = db.user.find_one({'id': userinfo['id']})
         posts = list(db.posting.find({'id': userinfo['id']}, {'_id': False}))
 
         return render_template('mypage.html', user=userinfo, profile=profile, posts=posts, id=userinfo['id'])
 
+
+################################################################
+################################################################
 ################################################################
 ##################아이디 찾기########################
+
+
 @app.route('/api/findid', methods=['POST'])
 def find_id_email():
     username_receive = request.form['username_give']
     useremail_receive = request.form['useremail_give']
-    user_info = db.user.find_one({'name': username_receive, 'email': useremail_receive},{'_id': False})
+    user_info = db.user.find_one({'name': username_receive, 'email': useremail_receive}, {'_id': False})
     if user_info is not None:
-        return jsonify({'result': 'success','id' :user_info['id']})
+        return jsonify({'result': 'success', 'id': user_info['id']})
     else:
-        return jsonify({'msg':'입력하신 정보와 일치하는 사용자가 없습니다.'})
+        return jsonify({'msg': '입력하신 정보와 일치하는 사용자가 없습니다.'})
+
 
 ##오브젝트 아이디값 같이 안넘어가게 하자###
 #################################################
-
+#################################################
+#################################################
 #######비밀번호 재설정###########################
+
+
 @app.route('/password_reset')
 def password_reset_page():
     return render_template('password_reset.html')
+
 
 @app.route('/api/password_reset', methods=['POST'])
 def password_reset():
     userid_receive = request.form['userid_give']
     useremail_receive = request.form['useremail_give']
     pw_receive = request.form['pw_give']
-    user_info = db.user.find_one({'id': userid_receive, 'email': useremail_receive},{'_id': False})
+    user_info = db.user.find_one({'id': userid_receive, 'email': useremail_receive}, {'_id': False})
     if user_info is not None:
         pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()
-        db.user.update_one({'id': userid_receive, 'email': useremail_receive}, {'$set':{'pw': pw_hash}})
-        return jsonify({'msg':'비밀번호 재설정이 완료되었습니다.'})
+        db.user.update_one({'id': userid_receive, 'email': useremail_receive}, {'$set': {'pw': pw_hash}})
+        return jsonify({'msg': '비밀번호 재설정이 완료되었습니다.'})
     else:
-        return jsonify({'msg':'입력하신 정보와 일치하는 사용자가 없습니다.'})
+        return jsonify({'msg': '입력하신 정보와 일치하는 사용자가 없습니다.'})
 
 
 ##################아이디 찾기 페이지#####################
+#####################################################
+#####################################################
+
+
 @app.route('/find')
 def find_id():
     return render_template('find_ID_Password.html')
+
+
 #####################################################
 
 # token확인 함수
-def check_token():
-    # 현재 이용자의 컴퓨터에 저장된 cookie 에서 mytoken 을 가져옵니다.
-    token_receive = request.cookies.get('mytoken')
-    # token을 decode하여 payload를 가져오고, payload 안에 담긴 유저 id를 통해 DB에서 유저의 정보를 가져옵니다.
-    payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-    return db.user.find_one({'id': payload['id']}, {'_id': False})
+# def check_token():
+#     # 현재 이용자의 컴퓨터에 저장된 cookie 에서 mytoken 을 가져옵니다.
+#     token_receive = request.cookies.get('mytoken')
+#     # token을 decode하여 payload를 가져오고, payload 안에 담긴 유저 id를 통해 DB에서 유저의 정보를 가져옵니다.
+#     payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+#     return db.user.find_one({'id': payload['id']}, {'_id': False})
 
 #################################
-
 
 
 if __name__ == '__main__':

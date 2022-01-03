@@ -21,16 +21,10 @@
           rel="stylesheet">
 
     <script>
-        {#$(document).ready(function () {#}
-        {#get_post()#}
-        {#show_comment()#}
-        {#have_token()#}
-        {# })#}
 
         function logout() {
             $.removeCookie('mytoken');
-            swal('로그아웃!');
-            window.location.href = '/login'
+            swal('로그아웃!').then(function() {window.location.href = '/login'})
         }
 
         $(function () {
@@ -62,21 +56,23 @@
             window.location.href = '/mypage'
         }
 
+        function save_comment(post_real_id) {
+            let reply = $(`#comment-box-${post_real_id}`).val();
 
-        function save_comment() {
-            let comment = $('#comment-box').val()
-            num = {{ post_number }}
-                $.ajax({
-                    type: 'POST',
-                    url: '/feedhome',
-                    data: {comment_give: comment, num_give: num},
-                    success: function (response) {
-                        swal(response['msg']);
-                        swal("댓글 작성 완료");
-                        window.location.reload()
-                    }
-                })
+            $.ajax({
+                type: 'POST',
+                url: '/feed_com',
+                data: {comment_give: reply, post_id_give: post_real_id},
+                success: function (response) {
+                    swal(response['msg']);
+                    swal("댓글 작성 완료").then(function (){window.location.reload()})
+
+                }
+            })
+            window.location.reload()
+
         }
+{########################################################################################################}
 
     </script>
 </head>
@@ -102,7 +98,6 @@
                             </div>
                         </div>
 
-
                     </div>
 
                 </div>
@@ -112,39 +107,31 @@
                 </div>
             </div>
             <div class="comment_container">
-                <div id="comment-list">
+                {% for comment in comments %}
+                {% if (comment['post_id']) == (post['_id']) %}
 
-                    {#                {% for comment in comments %}#}
-                    <div class="card">
-                        <p>id가 들어올자리</p>
-                        <p class="card_comment">커멘트 들어올자리</p>
-                        {#                        <p>"{{ comment['comments'] }}"</p>#}
-                        <button class="btn_delete" onclick=""></button>
+                    <div id="comment-list">
+                        <div class="card">
+                            <p>{{ comment['commenter'] }}</p>
+                            <p class="card_comment">{{ comment['reply'] }}</p>
+                            <button class="btn_delete" onclick=""></button>
+                        </div>
                     </div>
-                    {#                {% endfor %}#}
 
-                </div>
+                {% endif %}
+                {% endfor %}
                 <div class="comment_wrap">
-
                     <p>{{ post_id['id'] }}</p>
                     <div class="comment_btn_group">
-                        <textarea class="btn_input_comment" id="comment-box" placeholder="댓글을 입력해주세요"></textarea>
-                        <button class="btn_edit_comment" onclick="save_comment()">등록</button>
-
+                        <textarea id="comment-box-{{ post['_id'] }}" placeholder="댓글을 입력해주세요" class="btn_input_comment"></textarea>
+                       <button class="btn_edit_comment" onclick="save_comment('{{ post['_id'] }}')">등록</button>
                     </div>
 
                 </div>
-
-
 
             </div>
 
-            <!--                <input  value="댓글입력창">-->
-
-
-
         {% endfor %}
-
 
     </div>
 

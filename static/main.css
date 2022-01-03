@@ -416,6 +416,8 @@ body {
     align-items: center;
     max-width: 460px;
     width: 100%;
+    margin-left: 6px;
+
 }
 
 #comment-box {
@@ -428,10 +430,11 @@ body {
     border-radius: 4px;
     box-sizing: border-box;
     margin-right: 4px;
+    height: 30px;
 }
 
 #comment-list {
-    padding-bottom: 20px;
+    padding-bottom: 12px;
 
 }
 

@@ -27,8 +27,8 @@
 
         function logout() {
             $.removeCookie('mytoken');
-            swal('로그아웃!')
-            window.location.href = '/login'
+            swal('로그아웃!').then(function() {window.location.href = '/login'})
+
         }
 
         function current_page() {
@@ -55,8 +55,7 @@
                         $.cookie('mytoken', response['token']);
                         return
                     } else {
-                        swal('로그인 창으로 가서 토큰 받아오세요')
-                        window.location.href = '/login'
+                        swal('로그인 창으로 가서 토큰 받아오세요').then(function() {window.location.href = '/login'})
                     }
                 }
             })
@@ -74,11 +73,11 @@
                     url_give: url,
                     mylocation_give: mylocation,
                     mytext_give: text,
+                    {#writer id 필요 있는지 check#}
                     writerid_give: writer_id
                 },
                 success: function (response) {
-                    swal(response['msg'])
-                    window.location.href = '/mypage'
+                    swal(response['msg']).then(function() {window.location.href = '/mypage'})
                 }
             })
         }
