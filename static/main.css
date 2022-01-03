@@ -26,6 +26,7 @@ body {
     position: relative;
 }
 #tothetop {
+    display: none;
     background-image: url('../static/images/top_ment.png');
     background-repeat: no-repeat;
     background-position: center;

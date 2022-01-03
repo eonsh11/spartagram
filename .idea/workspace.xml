@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="568f5343-4edb-4f45-8b08-fceade260d6e" name="디폴트 변경 목록" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/feed_index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/feed_index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,7 +107,7 @@
       <option name="presentableId" value="Default" />
       <updated>1641135045829</updated>
       <workItem from="1641135047081" duration="1136000" />
-      <workItem from="1641168475997" duration="14641000" />
+      <workItem from="1641168475997" duration="14841000" />
     </task>
     <servers />
   </component>
