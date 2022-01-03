@@ -75,8 +75,8 @@
                 success: function (response) {
 
                     if (response["exists"]) {
-                        swal("이미 존재하는 아이디입니다.")
-                        window.location.href = '/register'
+                        swal("이미 존재하는 아이디입니다.").then(function (){window.location.reload()})
+                        {#$('#userid').val('')#}
                     } else {
                         swal("사용 할 수 있는 아이디입니다.")
                     }

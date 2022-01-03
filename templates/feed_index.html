@@ -126,15 +126,15 @@
                 </div>
                 <div class="comment_wrap">
 
-                    <p>{{ post['id'] }}</p>
+                    <p>{{ post_id['id'] }}</p>
+                    <div class="comment_btn_group">
+                        <textarea class="btn_input_comment" id="comment-box" placeholder="댓글을 입력해주세요"></textarea>
+                        <button class="btn_edit_comment" onclick="save_comment()">등록</button>
 
+                    </div>
 
                 </div>
-                <div class="comment_btn_group">
-                    <textarea class="btn_input_comment" id="comment-box" placeholder="댓글을 입력해주세요"></textarea>
-                    <button class="btn_edit_comment" onclick="save_comment()">등록</button>
 
-                </div>
 
 
             </div>

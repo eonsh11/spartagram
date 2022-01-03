@@ -27,7 +27,7 @@
 
         function logout() {
             $.removeCookie('mytoken');
-            alert('로그아웃!')
+            swal('로그아웃!')
             window.location.href = '/login'
         }
 
@@ -55,7 +55,7 @@
                         $.cookie('mytoken', response['token']);
                         return
                     } else {
-                        alert('로그인 창으로 가서 토큰 받아오세요')
+                        swal('로그인 창으로 가서 토큰 받아오세요')
                         window.location.href = '/login'
                     }
                 }
@@ -65,7 +65,6 @@
         function save_posting() {
             let url = $('.url-window').val()
             let mylocation = $('.mylocation-window').val()
-            let mytime = $('.mytime-window').val()
             let text = $('.mytextbox-window').val()
 
             $.ajax({
@@ -74,12 +73,11 @@
                 data: {
                     url_give: url,
                     mylocation_give: mylocation,
-                    mytime_give: mytime,
                     mytext_give: text,
                     writerid_give: writer_id
                 },
                 success: function (response) {
-                    alert(response['msg'])
+                    swal(response['msg'])
                     window.location.href = '/mypage'
                 }
             })
@@ -99,7 +97,6 @@
 
         <input class="mylocation-window btn_input" type="text" placeholder="내 위치"/>
 
-        <input class="mytime-window btn_input" type="text" placeholder="날짜 및 시간"/>
 
         <textarea class="mytextbox-window btn_input" placeholder="댓글을 입력해주세요"></textarea>
 

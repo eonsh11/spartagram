@@ -186,21 +186,17 @@ def posting_post():
     user_receive = userinfo['id']
     url_receive = request.form['url_give']
     mylocation_receive = request.form['mylocation_give']
-    mytime_receive = request.form['mytime_give']
     mytext_receive = request.form['mytext_give']
 
     #유저정보에 있는 필드의 마지막 항목은 프로필 url임
     profile_url = list(db.user.find({'id': user_receive},{'_id': False}))[-1]
-    # print(profile_url)
 
     postingtime = time.strftime('%x\n%X', time.localtime(time.time()))
 
     posts_info = list(db.posting.find({}))
-    # print(posts_info)
     last_number = 0
     count = 1
-    # if len(posts_info) is 0:
-        
+
     doc = {
         'id': user_receive,
         'num': count,
@@ -212,37 +208,14 @@ def posting_post():
         'profile_url': profile_url['url'],
     }
     db.posting.insert_one(doc)
-    # else:
-    #     last_number = dict(posts_info[-1])['num']
-    #
-    # count = last_number + 1
+
 
     posting_list = list(db.posting.find({}, {'_id': False}))
-    # count = len(posting_list) + 1
     return jsonify({'msg': '게시글 작성 완료'})
 
 
 ################################################################
 ## 피더부분################
-
-
-# @app.route('/feed_home')
-# def feed_home():
-#     return render_template('feed_index.html')
-
-
-# @app.route("/home", methods=["GET"])
-# def show_feed():
-#     userinfo = check_token()
-#     db.posting.find_one({})
-
-
-# @app.route("/homeid", methods=["GET"])
-# def find_id():
-#     userinfo = check_token()
-#
-#     return render_template('feed_index.html', id=userinfo['id'])
-
 
 @app.route("/feed_home", methods=["GET", "POST"])
 def feed_post():
@@ -251,15 +224,12 @@ def feed_post():
         userinfo = check_token()
 
         comment_receive = request.form['comment_give']
-        # writerid_receive = request.form['writerid_give']
         user_receive = userinfo['id']
 
         ##############################################
 
         comments_list = list(db.comments.find({}, {'_id': False}))
         count = len(comments_list) + 1
-        # commenter_receive = db.user.find_one({'id': userinfo['id']})
-
 
         doc = {
             'id': user_receive,
@@ -272,33 +242,19 @@ def feed_post():
 
     else:
         userinfo = check_token()
-        # commenter = db.comments.find_one({'id': userinfo['id']})
-
         # comments에서  각 게시물에 쓰여진 모든 댓글을 가져온다.
-        # comments = list(db.posting.find({'comments'}, {'_id': False}))
+
         post_id = db.posting.find_one({'id':userinfo['id']})
         posts_info = list(db.posting.find({}))
-        # print(posts_info)
         comments_num = list(db.comments.find({}))
 
         posts_num = list(db.posting.find({}))
         last_number = dict(posts_info[-1])['num']
-        # profile = db.posting.find({}, {'id': False})
-        # print(posts_info)
 
         return render_template('feed_index.html', posts_info=posts_info, post_id=post_id, post_number=last_number)
 
 
-# @app.route("/homecom", methods=["GET"])
-# def show_id():
-#     comment = list(db.comments.find({}, {'_id': False}))
-#
-#     return jsonify({'com':comment})
-
-
 #####################mypage부분#####################
-
-
 
 @app.route("/mypage", methods=["GET", "POST"])
 def mypage_post():
@@ -315,17 +271,9 @@ def mypage_post():
 
 
         post = list(db.posting.find({'id': user_receive}, {'_id': False}))
-        # print(post)
         db.posting.update_many({'id': user_receive}, {"$set": {"profile_url": url_receive}})
         print("post 업데이트 완료")
         # 3번 db에 넣어준다.
-
-
-        # if len(user) < 1:
-        #     # db.profile.insert_one(doc)
-        #     db.user.insert_one(doc)
-        # else:
-        #     db.profile.update_one({'id': user_receive}, {'$set': {'url': url_receive}})
 
         return jsonify({'msg': '사진 업로드 완료'})
 
@@ -334,8 +282,7 @@ def mypage_post():
 
         profile = db.user.find_one({'id': userinfo['id']})
         posts = list(db.posting.find({'id': userinfo['id']}, {'_id': False}))
-        # print("posts: ",posts)
-        # print("propile: ", profile)
+
         return render_template('mypage.html', user=userinfo, profile=profile, posts=posts, id=userinfo['id'])
 
 ################################################################
@@ -377,7 +324,7 @@ def password_reset():
 def find_id():
     return render_template('find_ID_Password.html')
 #####################################################
-###############################
+
 # token확인 함수
 def check_token():
     # 현재 이용자의 컴퓨터에 저장된 cookie 에서 mytoken 을 가져옵니다.
