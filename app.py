@@ -47,7 +47,7 @@ def home():
         # 암호화되어있는 token의 값을 우리가 사용할 수 있도록 디코딩(암호화 풀기)해줍니다!
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.user.find_one({"id": payload['id']})
-        return render_template('feed_index.html', id=user_info["id"])
+        return render_template('login.html', id=user_info["id"])
     # 만약 해당 token의 로그인 시간이 만료되었다면, 아래와 같은 코드를 실행합니다.
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
@@ -337,6 +337,57 @@ def mypage_post():
         # print("posts: ",posts)
         # print("propile: ", profile)
         return render_template('mypage.html', user=userinfo, profile=profile, posts=posts, id=userinfo['id'])
+
+################################################################
+##################아이디 찾기########################
+@app.route('/api/findid', methods=['POST'])
+def find_id_email():
+    username_receive = request.form['username_give']
+    useremail_receive = request.form['useremail_give']
+    user_info = db.user.find_one({'name': username_receive, 'email': useremail_receive},{'_id': False})
+    if user_info is not None:
+        return jsonify({'result': 'success','id' :user_info['id']})
+    else:
+        return jsonify({'msg':'입력하신 정보와 일치하는 사용자가 없습니다.'})
+
+##오브젝트 아이디값 같이 안넘어가게 하자###
+#################################################
+
+#######비밀번호 재설정###########################
+@app.route('/password_reset')
+def password_reset_page():
+    return render_template('password_reset.html')
+
+@app.route('/api/password_reset', methods=['POST'])
+def password_reset():
+    userid_receive = request.form['userid_give']
+    useremail_receive = request.form['useremail_give']
+    pw_receive = request.form['pw_give']
+    user_info = db.user.find_one({'id': userid_receive, 'email': useremail_receive},{'_id': False})
+    if user_info is not None:
+        pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()
+        db.user.update_one({'id': userid_receive, 'email': useremail_receive}, {'$set':{'pw': pw_hash}})
+        return jsonify({'msg':'비밀번호 재설정이 완료되었습니다.'})
+    else:
+        return jsonify({'msg':'입력하신 정보와 일치하는 사용자가 없습니다.'})
+
+
+##################아이디 찾기 페이지#####################
+@app.route('/find')
+def find_id():
+    return render_template('find_ID_Password.html')
+#####################################################
+###############################
+# token확인 함수
+def check_token():
+    # 현재 이용자의 컴퓨터에 저장된 cookie 에서 mytoken 을 가져옵니다.
+    token_receive = request.cookies.get('mytoken')
+    # token을 decode하여 payload를 가져오고, payload 안에 담긴 유저 id를 통해 DB에서 유저의 정보를 가져옵니다.
+    payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+    return db.user.find_one({'id': payload['id']}, {'_id': False})
+
+#################################
+
 
 
 if __name__ == '__main__':

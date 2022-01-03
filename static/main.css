@@ -1,5 +1,15 @@
-/*공통*/
+/*alert*/
+.swal-wide{
+    width: 250px !important;
+}
+.swal-footer {
+    text-align: center;
+}
+.swal-button {
+  background-color: #f44336;
+}
 
+/*공통*/
 * {
     font-size: 16px;
     font-family: 'Noto Sans KR', sans-serif;
@@ -129,6 +139,17 @@ body {
     border-radius: 4px;
     box-sizing: border-box;
 }
+.btn_input_comment {
+    padding-left: 10px;
+    margin: 6px auto 6px;
+    max-width: 340px;
+    width: 100%;
+    height: 30px;
+    background-color: #f5f5f5;
+    border: 1px solid #c2c2c2;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
 
 .btn_input_edit {
     padding-left: 10px;
@@ -152,7 +173,7 @@ body {
 }
 
 .btn_edit_comment {
-    width: auto;
+    width: 50px;
     height: 30px;
     background-color: #fff;
     border: 1px solid #f44336;
@@ -204,10 +225,10 @@ body {
 
 
 .login_wrap {
-    margin: 0 auto;
     max-width: 400px;
     width: 100%;
     text-align: center;
+    margin: 0 auto;
 }
 
 .login_wrap p {
@@ -268,7 +289,7 @@ body {
 }
 
 .feed_container {
-    height: 480px;
+    height: 450px;
     border-bottom: 1px solid #e0e0e0;
 }
 
@@ -304,16 +325,32 @@ body {
 
 .posting_wrap .writer_info .writer_info_left .writer_id {
     margin-left: 10px;
+    margin-bottom: 2px;
     font-weight: 700;
-    font-size: 20px;
+    font-size: 18px;
 
 }
-
-.posting_wrap .writer_info .writer_info_left .writer_location {
+.posting_wrap .writer_info .info_group_bottom {
+    display: flex;
+    align-items: center;
+    margin-top: 2px;
     margin-left: 10px;
-    font-size: 16px;
+    font-size: 14px;
+
+
+}
+.posting_wrap .writer_info .info_group_bottom p {
+    margin-right: 10px;
+    color: #f44336;
+}
+.posting_wrap .writer_info .info_group_bottom .write-time {
     color: #707070;
 }
+/*.posting_wrap .writer_info .writer_info_right {*/
+/*    margin-left: 10px;*/
+/*    font-size: 16px;*/
+/*    color: #707070;*/
+/*}*/
 
 .posting_wrap .writer_info .writer_info_left img {
     width: 36px;
@@ -322,14 +359,18 @@ body {
     border-radius: 50%;
 }
 
-.posting_wrap .writer_info .writer_info_right {
-    font-size: 16px;
-    color: #f44336;
-}
+/*.posting_wrap .writer_info .writer_info_right {*/
+/*    font-size: 16px;*/
+/*    color: #f44336;*/
+/*}*/
 
 .comment_container {
     padding: 10px 10px;
     border-bottom: 1px solid #e0e0e0;
+
+}
+.comment_container:nth-last-child(1){
+    padding-bottom: 60px;
 
 }
 
@@ -342,12 +383,13 @@ body {
 
 .comment_wrap p {
     font-weight: 700;
-    margin-left: 10px;
+    margin-left: 6px;
 
 }
 
-.comment_wrap .comment_btn_group {
-
+.comment_btn_group {
+    display: flex;
+    align-items: center;
 }
 
 #comment-box {
@@ -391,12 +433,16 @@ body {
 
 }
 
-#profile-img img {
+#profile-img img{
     width: 150px;
     height: 150px;
     object-fit: cover;
     border-radius: 250px;
     border: 1px solid #e0e0e0;
+    background-image: url('../static/images/mypage_profile_basic_img.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 #profile-img-edit {
@@ -460,4 +506,32 @@ body {
 }
 .post_wrap .mytextbox-window{
     height: 70px;
+}
+
+/*find_ID_page*/
+.find_id_wrap {
+    margin: 0 auto;
+    max-width: 360px;
+    width: 100%;
+
+}
+.find_id_wrap h1 {
+    text-align: center;
+    line-height: 20px;
+    margin-bottom: 20px;
+    color: #373737;
+}
+
+/*reset_password_page*/
+.reset_password_wrap {
+    margin: 0 auto;
+    max-width: 360px;
+    width: 100%;
+
+}
+.reset_password_wrap h1 {
+    text-align: center;
+    line-height: 20px;
+    margin-bottom: 20px;
+    color: #373737;
 }

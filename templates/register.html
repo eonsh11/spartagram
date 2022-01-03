@@ -3,12 +3,12 @@
 <head>
 
     <!-- Webpage Title -->
-    <title>Hello, world!</title>
+    <title>spartagram | register</title>
 
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <link rel="shortcut icon" type="image/x-icon" href="../static/images/spartagram_icon_s.ico"/>
     <!-- css 초기화 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
     <link rel="stylesheet" href="../static/main.css">
@@ -16,7 +16,7 @@
     <!-- JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
-
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <!-- google font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -38,10 +38,10 @@
                 },
                 success: function (response) {
                     if (response['result'] == 'success') {
-                        alert('회원가입이 완료되었습니다.')
+                        swal('회원가입이 완료되었습니다.');
                         window.location.href = '/login'
                     } else {
-                        alert(response['msg'])
+                        swal(response['msg']);
                     }
                 }
             })
@@ -60,11 +60,11 @@
             let userid = $("#userid").val()
             console.log(username)
             if (userid == "") {
-                alert('아이디를 입력해 주세요.')
+                swal('아이디를 입력해 주세요.');
                 return;
             }
             if (!is_userid(userid)) {
-                alert("아이디의 형식을 확인해주세요. 영문과 숫자, 일부 특수문자(._-) 사용 가능. 2-10자 길이")
+                swal("아이디의 형식을 확인해주세요. 영문과 숫자, 일부 특수문자(._-) 사용 가능. 2-10자 길이");
                 return;
             }
 
@@ -75,10 +75,10 @@
                 success: function (response) {
 
                     if (response["exists"]) {
-                        alert("이미 존재하는 아이디입니다.")
+                        swal("이미 존재하는 아이디입니다.")
                         window.location.href = '/register'
                     } else {
-                        alert("사용 할 수 있는 아이디입니다.")
+                        swal("사용 할 수 있는 아이디입니다.")
                     }
                 }
             });
