@@ -68,31 +68,31 @@
 
 
 ### 개발자 (가나다순)
-김준형 @[highsky21c](https://github.com/highsky21c)
+💪 김준형 / aka 헬창 🏋🏼 @[highsky21c](https://github.com/highsky21c)
 
 ✔ 로그인 페이지 담당<br>
 ✔ 회원가입, 회원정보 찾기 기능 구현<br>
 ✔ 페이지별 기능 오류 수정<br>
 
-김진주 @[kimpearl3599](https://github.com/kimpearl3599)
+🤱 김진주 / aka 주님 🙏 @[kimpearl3599](https://github.com/kimpearl3599)
 
 ✔ CSS 구현<br>
 ✔ 파비콘 & logo 이미지 제작<br>
 ✔ GIT 사용 및 에러해결<br>
 
-박정훈 @[ParkJeonghunn](https://github.com/ParkJeonghunn)
+😼 박정훈 / aks 젤리보이 🍡 @[ParkJeonghunn](https://github.com/ParkJeonghunn)
 
 ✔ 게시물 페이지 담당<br>
 ✔ 페이지별 기능 오류 수정<br>
 ✔ AWS EC2 배포<br>
 
-윤정기 @[lution88](https://github.com/lution88)
+💊 윤정기 / aka ill_boy 🤓 @[lution88](https://github.com/lution88)
 
 ✔ 피드 페이지 담당<br>
 ✔ 페이지 별 기능 오류 수정<br>
 ✔ DB 관리<br>
 
-⭐🌟💫✨🌞 전승현 / 위대하신 저희의 팀장님🚴‍♀️⭐🌟💫✨🌞 @[kidcode](https://github.com/eonsh11)
+🚴‍♀️ 전승현 / aka pants_ceo👖 @[kidcode](https://github.com/eonsh11)
 
 ✔ Pants CEO 인줄 알았으나 Real CEO<br>
 ✔ 마이 페이지 담당<br>
