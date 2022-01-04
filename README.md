@@ -64,6 +64,8 @@
 ## 팀빌딩 및 역할
 - 부트캠프 <스파르타 내일배움캠프> 참가자로 구성
 - 비전공자 5인의 첫 팀프로젝트
+<img width="397" alt="스크린샷 2022-01-04 오전 11 24 18" src="https://user-images.githubusercontent.com/80694130/148001462-dd823e4b-1ed4-4426-95f0-9d61b0c0b71f.png">
+
 
 ### 개발자 (가나다순)
 김준형 @[highsky21c](https://github.com/highsky21c)
