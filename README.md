@@ -99,7 +99,7 @@
 ✔ 페이지별 기능 오류 수정<br>
 ✔ 댓글 기능 구현<br>
 
-## Spartagram API(https://iridescent-ground-7ce.notion.site/Spartagram-s-API-9b336a12f35f4e63b10f8ef73c293314) 설계하기
+## [Spartagram API](https://iridescent-ground-7ce.notion.site/Spartagram-s-API-9b336a12f35f4e63b10f8ef73c293314)
 
 ![image](https://user-images.githubusercontent.com/79038451/148002043-95df7d6a-316e-42f5-8ff4-f6de55be2e4c.png)
 ![image](https://user-images.githubusercontent.com/79038451/148002073-e7525c41-b917-4945-be98-8f644cb9364b.png)
