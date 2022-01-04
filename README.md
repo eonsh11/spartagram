@@ -109,4 +109,5 @@
 #### 피드 페이지
 #### 마이 페이지
 #### 게시물 작성 페이지
+![](https://user-images.githubusercontent.com/80694130/148000512-401f2b41-8ef3-4b39-8b8d-9e875e48146d.png)
 
