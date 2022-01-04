@@ -101,6 +101,10 @@
 
 ## Spartagram API 설계하기
 <https://iridescent-ground-7ce.notion.site/Spartagram-s-API-9b336a12f35f4e63b10f8ef73c293314>
+![image](https://user-images.githubusercontent.com/79038451/148002043-95df7d6a-316e-42f5-8ff4-f6de55be2e4c.png)
+![image](https://user-images.githubusercontent.com/79038451/148002073-e7525c41-b917-4945-be98-8f644cb9364b.png)
+![image](https://user-images.githubusercontent.com/79038451/148002093-6fd44f8d-7bd3-4b93-a7ee-dcd0229593d4.png)
+
 
 ## 와이어프레임
 ### 워크플로우 차트
