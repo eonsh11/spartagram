@@ -138,7 +138,7 @@
                 {% endif %}
                 {% endfor %}
                 <div class="comment_wrap">
-                    <p>{{ post_id['id'] }}</p>
+{#                    <p>{{ post_id['id'] }}</p>#}
                     <div class="comment_btn_group">
                         <textarea id="comment-box-{{ post['_id'] }}" placeholder="댓글을 입력해주세요" class="btn_input_comment" style="resize: none;"></textarea>
                        <button class="btn_edit_comment" onclick="save_comment('{{ post['_id'] }}')">등록</button>
