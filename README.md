@@ -100,6 +100,7 @@
 ✔ 댓글 기능 구현<br>
 
 ## Spartagram API 설계하기
+https://iridescent-ground-7ce.notion.site/Spartagram-s-API-9b336a12f35f4e63b10f8ef73c293314
 
 ## 와이어프레임
 ### 워크플로우 차트
