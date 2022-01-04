@@ -53,27 +53,68 @@
 - 비전공자 5인의 첫 팀프로젝트
 ### 개발자 (가나다순)
 김준형 @[highsky21c](https://github.com/highsky21c)
+<br>
 :두꺼운_확인_표시: 로그인 페이지 담당
+<br>
 :두꺼운_확인_표시: 회원가입, 회원정보 찾기 기능 구현
+<br>
+
 :두꺼운_확인_표시: 페이지별 기능 오류 수정
+<br>
+
 김진주 @[kimpearl3599](https://github.com/kimpearl3599)
+<br>
+
 :두꺼운_확인_표시: CSS 구현
+<br>
+
 :두꺼운_확인_표시: 파비콘 & logo 이미지 제작
+<br>
+
 :두꺼운_확인_표시: GIT 사용 및 에러해결
+<br>
+
 박정훈 @[ParkJeonghunn](https://github.com/ParkJeonghunn)
+<br>
+
 :두꺼운_확인_표시: 게시물 페이지 담당
+<br>
+
 :두꺼운_확인_표시: 페이지별 기능 오류 수정
+<br>
+
 :두꺼운_확인_표시: AWS EC2 배포
+<br>
+
 윤정기 @[lution88](https://github.com/lution88)
+<br>
+
 :두꺼운_확인_표시: 피드 페이지 담당
+<br>
+
 :두꺼운_확인_표시: 페이지 별 기능 오류 수정
+<br>
+
 :두꺼운_확인_표시: DB 관리
+<br>
+
 :별::별2::어지러운::반짝임::얼굴이_있는_태양: 전승현 / 위대하신 저희의 팀장님:자전거를_타는_여성::별::별2::어지러운::반짝임::얼굴이_있는_태양: @[kidcode](https://github.com/eonsh11)
+<br>
+
 :두꺼운_확인_표시: Pants CEO 인줄 알았으나 Real CEO
+<br>
+
 :두꺼운_확인_표시: 마이 페이지 담당
+<br>
+
 :두꺼운_확인_표시: 페이지별 기능 오류 수정
+<br>
+
 :두꺼운_확인_표시: 댓글 기능 구현
+<br>
+
 ## Spartagram API 설계하기
+
 ## 와이어프레임
 ### 워크플로우 차트
 ![](https://images.velog.io/images/gkrwkd95/post/69fa6334-f302-4f69-b7fa-377146504b56/spartagram_wireframe.png)
