@@ -1,6 +1,7 @@
 ## 프로젝트 개요
 ### 프로젝트명 : Spartagram (sparta + instagram)
 이 서비스는 내배캠캠퍼들의 sns로서 내배캠을 진행하는 동안 즐거웠던 혹은 기억에 남는 순간들을 게시하여 다른 캠퍼들과 소통할 수 있는 서비스입니다.
+<br>
 [시연 영상](https://www.youtube.com/watch?v=gKp9Z7L4Ags) 👈 link
 ### 개발기간
 
